@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Minimal</title>
+
+    <style>
+        :root {
+            --bg-color: #f4efe7;          /* Crema */
+            --sidebar-bg: #efe9df;        /* Beige más claro */
+            --text-color: #3b2f2f;        /* Café oscuro */
+            --text-muted: #7a6f6f;        /* Café suave */
+            --accent: #c8a97e;            /* Café dorado */
+            --card-bg: #ffffff;           /* Blanco */
+            --border-color: #e0d6c8;      /* Crema suave */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 250px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100%;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: var(--text-color);
+            margin-bottom: 3rem;
+            letter-spacing: 1px;
+        }
+
+        .menu-item {
+            display: block;
+            padding: 0.9rem 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 0.6rem;
+            transition: 0.2s ease-in-out;
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 2rem;
+        }
+
+        /* TITLES */
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        /* CARDS */
+        .stat-card,
+        .recent-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-title {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 600;
+        }
+
+        /* GRID */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+
+        tr:hover td {
+            background: #faf7f2;
+        }
+
+        /* STATUS BADGES */
+        .status {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status.available {
+            background: #e8f7e1;
+            color: #467a3a;
+            border: 1px solid #cce7c1;
+        }
+
+        .status.borrowed {
+            background: #fde7e7;
+            color: #a14343;
+            border: 1px solid #f1c6c6;
+        }
+
+        /* BUTTON */
+        .btn-add {
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn-add:hover {
+            background: #b58c63;
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">BIBLIOTECA</div>
+
+        <nav>
+            <a href="#" class="menu-item active">🏠 Dashboard</a>
+            <a href="#" class="menu-item">📚 Libros</a>
+            <a href="#" class="menu-item">👥 Autores</a>
+            <a href="#" class="menu-item">🔄 Préstamos</a>
+            <a href="#" class="menu-item">⚙️ Configuración</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        {% block contenido %}
+        {% endblock %}
+    </main>
+
+</body>
+
+</html>
