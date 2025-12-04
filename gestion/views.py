@@ -49,7 +49,6 @@ def lista_prestamo(request):
     pass
 
 def crear_prestamo(request):
-    prestamo = Prestamo.objects.all()
     
     if request.method == 'POST':
         libro = request.POST.get('libro')
@@ -71,4 +70,15 @@ def lista_multas(request):
     pass
 
 def crear_multas(request):
-    pass
+    
+    if request.method == 'POST':
+        prestamo = request.POST.get('prestamo')
+        tipo = request.POST.get('tipo')
+        monto = request.POST.get('monto')
+        pagada = request.POST.get('pagada')
+        fecha = request.POST.get('fecha')
+        Prestamo.objects.create(prestamo=prestamo, tipo=tipo, monto=monto,
+                                pagada=pagada, fecha=fecha)
+        return redirect(lista_multas)
+    return render(request='gestion/templates/crear_multas.html')
+
