@@ -11,6 +11,7 @@ urlpatterns = [
     #autores
     path('autores/', lista_autores, name="lista_autores"),
     path('autores/nuevo/', crear_autor, name="crear_autores"),
+    path('autores/<int:id>/editar/', crear_autor, name="editar_autores"),
     
     #prestamos
     path('prestamos/', lista_prestamo, name="lista_prestamos"),

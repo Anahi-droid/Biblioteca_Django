@@ -27,39 +27,62 @@ def crear_libro(request):
             Libro.objects.create(titulo=titulo, autor=autor)
             return redirect('lista_libros')
     return render(request='gestion/templates/crear_libros.html')
+     
     
-
 def lista_autores(request):
     autores = Autor.objects.all()
     return render(request, 'gestion/templates/autores.html', {'autores': autores})
     pass
 
-def crear_autor(request):
+def crear_autor(request, id=None):
+    if id == None:
+        autor = None 
+        modo = 'crear'
+    else:
+        autor = get_object_or_404(Autor, id=id)
+        modo = 'editar'
+        
     if request.method == 'POST':
         nombre = request.POST.get('nombre')
         apellido = request.POST.get('apellido')
         bibliografia = request.POST.get('bibliografia')
-        Autor.objects.create(nombre=nombre, apellido=apellido, bibliografia=bibliografia)
-        return redirect(lista_autores)
-    return render(request='gestion/templates/crear_autores.html')
+        if autor == None:
+            Autor.objects.create(nombre=nombre, apellido=apellido, bibliografia=bibliografia)
+        else:
+            autor.apellido = apellido # nuevo valor seran los datos que capturo desde el formulario
+            autor.nombre = nombre
+            autor.bibliografia = bibliografia
+            autor.save()
+        return redirect('lista_autores')
+    context = {'autor': autor,
+               'titulo': 'Editar Autor' if modo == 'editar' else 'Crear Autor',
+               'texto_boton': 'Guardar cambios' if modo == 'editar' else 'Crear'}
+    return render(request='gestion/templates/crear_autores.html', context)
 
 def lista_prestamo(request):
     prestamo = Prestamo.objects.all()
-    return render(request, 'gestion/templates/prestamo.html', {'prestamo': prestamo})
+    return render(request, 'gestion/templates/prestamo.html', {'prestamo': prestamo}) # se manda para que se visualice 
     pass
 
 def crear_prestamo(request):
-    
+    libro = Libro.objects.filter(disponible=True)
+    usuario = User.objects.all()
+        
     if request.method == 'POST':
-        libro = request.POST.get('libro')
-        usuario = request.POST.get('usuario')
-        fecha_prestamos = request.POST.get('fecha_prestamos')
-        fecha_maxima = request.POST.get('fecha_maxima')
-        fecha_devolucion = request.POST.get('fecha_devolucion')
-        Prestamo.objects.create(libro=libro, usuario=usuario, fecha_prestamos=fecha_prestamos,
-                                fecha_maxima=fecha_maxima, fecha_devolucion=fecha_devolucion)
-        return redirect(detalle_prestamo)
-    return render(request='gestion/templates/crear_prestamos.html')
+        libro_id = request.method.POST.get('libro')
+        usuario_id = request.method.POST.get('usuario')
+        fecha_prestamo = request.method.POST.get('fecha_prestamo')
+        if libro_id and usuario_id and fecha_prestamo:
+            libro = get_object_or_404(Libro, id=Libro_id)
+            usuario = get_object_or_404(User, id=usuario_id)
+            prestamo = Prestamo.objects.create(libro=libro, usuario=usuario,
+                                fecha_prestamo=fecha_prestamo)
+            libro.disponible = False 
+            libro.save()
+            return redirect('detalle_prestamo', id=prestamo.id)
+    fecha = (timezone.now().date()).isoformat() # fromato iso es YYY-MM-DD
+    return render(request,'gestion/templates/crear_prestamos.html', {'libros': libro, 'usuario': usuario,
+                                                                     'fecha': fecha })
 
 def detalle_prestamo(request):
     pass
@@ -80,5 +103,5 @@ def crear_multas(request):
         Prestamo.objects.create(prestamo=prestamo, tipo=tipo, monto=monto,
                                 pagada=pagada, fecha=fecha)
         return redirect(lista_multas)
-    return render(request='gestion/templates/crear_multas.html')
+    return render(request,'gestion/templates/crear_multas.html')
 
