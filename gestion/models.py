@@ -29,6 +29,10 @@ class Prestamos(models.Model):
     fecha_prestamos = models.DateField(default=timezone.now) # aqui es para la fecha de ese dia, importamos libreria
     fecha_maxima= models.DateField()
     fecha_devolucion = models.DateField(blank=True, null= True) # aqui defino que no sea obligatorio
+    
+    class Meta: # permisos, lo que puede hacer en cada una de las clases
+        permissions = (("Ver_prestamos", "Puede ver prestamos"),
+                       ("gestionar_prestamos", "Puede gestionar prestamos"),)
 
     def __str__(self):
         return f"Prestamo de {self.libro} a {self.usuario}"

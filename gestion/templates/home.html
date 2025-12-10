@@ -1,73 +1,49 @@
-{% extends 'index.html' %}
+{% extends "index.html" %}
 
-{% block contenido %}
-<header>
-    <h2>Panel de Control</h2>
-    <div class="user-profile">
-        <span>Admin</span>
-        <div class="avatar"></div>
-    </div>
-</header>
+{% block content %}
 
-<div class="stats-grid">
-    <div class="stat-card">
-        <div class="stat-title">Total Libros</div>
-        <div class="stat-value">1,240</div>
-    </div>
-    <div class="stat-card" style="border-color: rgba(0, 243, 255, 0.3);">
-        <div class="stat-title">Préstamos Activos</div>
-        <div class="stat-value" style="color: var(--neon-blue)">45</div>
-    </div>
-    <div class="stat-card" style="border-color: rgba(255, 0, 85, 0.3);">
-        <div class="stat-title">Multas Pendientes</div>
-        <div class="stat-value" style="color: var(--neon-red)">$120</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-title">Usuarios Registrados</div>
-        <div class="stat-value">350</div>
-    </div>
-</div>
+<!-- Préstamos -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card shadow h-100">
+          <div class="card-body text-center">
+            <h5 class="card-title text-primary">📚 Préstamos</h5>
+            <p class="card-text">Administra los préstamos de libros realizados por los estudiantes.</p>
+            <a href="#" class="btn btn-outline-primary">Ver más</a>
+          </div>
+        </div>
+      </div>
 
-<section class="recent-section">
-    <div class="section-header">
-        <h3>Libros Recientes</h3>
-        <a href="#" class="btn-add">+ Nuevo Libro</a>
-    </div>
-    <table>
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Autor</th>
-                <th>Categoría</th>
-                <th>Estado</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>El Principito</td>
-                <td>Antoine de Saint-Exupéry</td>
-                <td>Ficción</td>
-                <td><span class="status available">Disponible</span></td>
-            </tr>
-            <tr>
-                <td>Cien Años de Soledad</td>
-                <td>Gabriel García Márquez</td>
-                <td>Novela</td>
-                <td><span class="status borrowed">Prestado</span></td>
-            </tr>
-            <tr>
-                <td>1984</td>
-                <td>George Orwell</td>
-                <td>Ciencia Ficción</td>
-                <td><span class="status available">Disponible</span></td>
-            </tr>
-            <tr>
-                <td>Don Quijote</td>
-                <td>Miguel de Cervantes</td>
-                <td>Clásico</td>
-                <td><span class="status available">Disponible</span></td>
-            </tr>
-        </tbody>
-    </table>
-</section>
+      <!-- Autores -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card shadow h-100">
+          <div class="card-body text-center">
+            <h5 class="card-title text-success">✍️ Autores</h5>
+            <p class="card-text">Consulta y gestiona la información de los autores registrados.</p>
+            <a href="{% url 'lista_autores'%}" class="btn btn-outline-success">Ver más</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Multas -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card shadow h-100">
+          <div class="card-body text-center">
+            <h5 class="card-title text-danger">💰 Multas</h5>
+            <p class="card-text">Revisa las multas pendientes por retrasos en la devolución.</p>
+            <a href="#" class="btn btn-outline-danger">Ver más</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Libros -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card shadow h-100">
+          <div class="card-body text-center">
+            <h5 class="card-title text-warning">📖 Libros</h5>
+            <p class="card-text">Explora el catálogo completo de libros disponibles en la biblioteca.</p>
+            <a href="#" class="btn btn-outline-warning">Ver más</a>
+          </div>
+        </div>
+      </div>
+
 {% endblock %}

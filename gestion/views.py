@@ -3,8 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.conf import settings
+from django.http import HttpResponseForbidden
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
-from .models import Autor, Libro, Prestamo, Multa
+from .models import Autor, Libro, Prestamos, Multa
 
 def index(request):
     title = settings.TITLE
@@ -12,8 +15,7 @@ def index(request):
 
 def lista_libros(request):
     libros = Libro.objects.all()
-    return render(request, 'gestion/templates/libros.html', {'autores': libros})
-    pass
+    return render(request, 'gestion/templates/libros.html', {'libros': libros})
 
 def crear_libro(request):
     autores = Autor.objects.all()
@@ -26,14 +28,15 @@ def crear_libro(request):
             autor = get_object_or_404(Autor, id=autor_id)
             Libro.objects.create(titulo=titulo, autor=autor)
             return redirect('lista_libros')
-    return render(request='gestion/templates/crear_libros.html')
+    return render(request, 'gestion/templates/crear_libros.html', {'autores': autores})
      
     
 def lista_autores(request):
     autores = Autor.objects.all()
     return render(request, 'gestion/templates/autores.html', {'autores': autores})
-    pass
 
+
+@ login_required # ponemos antes esto de todas las funciones que querramos que antes de que ingrese aparezca un login
 def crear_autor(request, id=None):
     if id == None:
         autor = None 
@@ -57,14 +60,17 @@ def crear_autor(request, id=None):
     context = {'autor': autor,
                'titulo': 'Editar Autor' if modo == 'editar' else 'Crear Autor',
                'texto_boton': 'Guardar cambios' if modo == 'editar' else 'Crear'}
-    return render(request='gestion/templates/crear_autores.html', context)
+    return render(request,'gestion/templates/crear_autores.html', context)
 
 def lista_prestamo(request):
-    prestamo = Prestamo.objects.all()
+    prestamo = Prestamos.objects.all()
     return render(request, 'gestion/templates/prestamo.html', {'prestamo': prestamo}) # se manda para que se visualice 
-    pass
 
+@ login_required
 def crear_prestamo(request):
+    
+    if not request.user.has.perm('gestion.gestionar_prestamos'): # aqui gestionamos el permiso, si no tiene este permiso tata
+        return HttpResponseForbidden()
     libro = Libro.objects.filter(disponible=True)
     usuario = User.objects.all()
         
@@ -73,9 +79,9 @@ def crear_prestamo(request):
         usuario_id = request.method.POST.get('usuario')
         fecha_prestamo = request.method.POST.get('fecha_prestamo')
         if libro_id and usuario_id and fecha_prestamo:
-            libro = get_object_or_404(Libro, id=Libro_id)
+            libro = get_object_or_404(Libro, id=libro_id)
             usuario = get_object_or_404(User, id=usuario_id)
-            prestamo = Prestamo.objects.create(libro=libro, usuario=usuario,
+            prestamo = Prestamos.objects.create(libro=libro, usuario=usuario,
                                 fecha_prestamo=fecha_prestamo)
             libro.disponible = False 
             libro.save()
@@ -90,18 +96,21 @@ def detalle_prestamo(request):
 def lista_multas(request):
     multas = Multa.objects.all()
     return render(request, 'gestion/templates/prestamo.html', {'multas': multas})
-    pass
 
 def crear_multas(request):
+    pass
+
+def registro(request):
     
     if request.method == 'POST':
-        prestamo = request.POST.get('prestamo')
-        tipo = request.POST.get('tipo')
-        monto = request.POST.get('monto')
-        pagada = request.POST.get('pagada')
-        fecha = request.POST.get('fecha')
-        Prestamo.objects.create(prestamo=prestamo, tipo=tipo, monto=monto,
-                                pagada=pagada, fecha=fecha)
-        return redirect(lista_multas)
-    return render(request,'gestion/templates/crear_multas.html')
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            usuario = form.save()
+            login(request, usuario)
+            return redirect('index')
+    else:
+        form = UserCreationForm()
+    return render(request, 'gestion/templates/registration/registro.html', {'form':form})
+        
+    
 
