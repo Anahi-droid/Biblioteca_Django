@@ -2,6 +2,7 @@
 
 {% block contenido %}
 <h2> AUTORES </h2>
+<<<<<<< HEAD
     <table style="border: 1px solid">
         <tr style="border: 1px solid">
             <td style="border: 1px solid">Nombre</td>
@@ -35,4 +36,29 @@
 
     </table>
 
+=======
+<table style="border: 1px solid">
+    <tr style="border: 1px solid">
+        <td style="border: 1px solid">Nombre</td>
+        <td style="border: 1px solid">Apellido</td>
+        <td style="border: 1px solid">Bibliografía</td>
+    </tr>
+    {% for autor in autores %}
+    <tr style="border: 1px solid">
+        <td style="border: 1px solid">
+            {{ autor.nombre }}
+        </td>
+        <td style="border: 1px solid">
+            {{ autor.apellido }}
+        </td>
+        <td style="border: 1px solid">
+            {{ autor.bibliografia}}
+        </td>
+        <td>
+            <a href="{% url 'editar_autor' autor.id%}">Editar</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+>>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
 {% endblock %}

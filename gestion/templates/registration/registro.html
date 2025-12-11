@@ -1,5 +1,6 @@
 {% extends "index.html" %}
 
+<<<<<<< HEAD
 {%block contenido%}
 <h2>Registro de usuario</h2>
 
@@ -12,3 +13,18 @@
 </form>
 
 {% endblock %}
+=======
+{% block contenido %}
+<h2> Registro de usuario </h2>
+
+<form method='POST'>
+    {{ form}}
+    {%csrf_token%}
+    {{form.as_div}} # el div es solo como se vera, podemos poner p y se ve d ediferente manera
+
+    <button type="submit">Crear</button> # boton siempre dentro del form
+
+</form>
+
+{% endblock %}
+>>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6

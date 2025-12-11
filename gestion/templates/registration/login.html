@@ -1,5 +1,6 @@
 {% extends "index.html" %}
 
+<<<<<<< HEAD
 {% block contenido%}
 
 <h2> Iniciar Sesiòn</h2>
@@ -18,4 +19,24 @@
 
     <button type="submit">Entrar</button>
 </form>
+=======
+{% block contenido %}
+
+<h2> Iniciar Sesión </h2>
+{% if form.errors %} # formulario para errores
+<p> Usuario o contraseña incorrectos </p>
+
+{% endif %} 
+<form method='POST'>
+    {% csrf_token %} # genera un token de sesion del firebox, permite que no haya bots que ingresen
+    <label for="id_username">Usuario: </label>
+    <input type="text" name="username" id="id_username" required><br/>
+
+    <label for="id_password">Contraseña: </label>
+    <input type="password" name="password" id="id_password" required><br/>
+
+    <button type="submit">Entrar</button>
+</form>
+
+>>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
 {% endblock %}

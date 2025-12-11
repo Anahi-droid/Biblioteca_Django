@@ -15,21 +15,36 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+<<<<<<< HEAD
 TITLE = "UTE 2 semestre desarrollo de software"
 
 MULTA = 0.5
 
 
+=======
+TITLE = "UTE 2 semestre Desarrollo de Software"
+
+MULTA = 0.5
+
+>>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+<<<<<<< HEAD
 SECRET_KEY = 'django-insecure-ld6p*6o5z=sfn7h=u0%p)bd&i+zy2#4#mjln%!wyc5pzh)bziy'
+=======
+SECRET_KEY = 'django-insecure-qeryr41n@z-&y$3blxte56^le^ejo2-9ky9t&0-+6!bxorn77z'
+>>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+<<<<<<< HEAD
 ALLOWED_HOSTS = ['localhost','127.0.0.1','172.16.0.16']
+=======
+ALLOWED_HOSTS = ['localhost']
+>>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
 
 
 # Application definition
@@ -44,7 +59,11 @@ INSTALLED_APPS = [
     'gestion',
 ]
 
+<<<<<<< HEAD
 MIDDLEWARE = [
+=======
+MIDDLEWARE = [  
+>>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -126,7 +145,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+<<<<<<< HEAD
 
 LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = "login"
 LOGOUT_REDIRECT_URL = "index"
+=======
+LOGIN_REDIRECT_URL = 'index' # manda a la pagina principal directo
+LOGIN_URL = "login" # manda al login, pagina directa del login 
+>>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6

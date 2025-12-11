@@ -1,5 +1,6 @@
 {% extends "index.html" %}
 
+<<<<<<< HEAD
 <!-- Seccion de autores -->
 {% block contenido %}
 <h2> {{ titulo }}</h2>
@@ -16,5 +17,23 @@
     <input type="text" id="id_bibliografia" name="bibliografia" value="{{ autor.bibliografia | default_if_none:'' }}" required><br/>
 
     <button type="submit"> {{ texto_boton }}</button>
+=======
+{%block contenido%}
+<h2> {{ titulo }} </h2>
+
+<form method="POST"> # from porque haremos un formulario
+    {% csrf_token %} # crea de token, se genera cada cierto tiempo
+    <label for="id_nombre" name="nombre">Nombre: </label>
+    <input placeholder="Nombre" type="text" id="id_nombre" name="nombre" value= "{{autor.nombre | default_if_none:""}}" required> <br/> # por defecto si es un none pongame un vacio
+      # placeholder es para que salga en el campo una ayuda de lo que se debe llenar
+
+    <label for="id_apellido" name="apellido">Apellido: </label>
+    <input  placeholder="Apellido" type="text" id="id_apellido" name="apellido" value= "{{autor.apellido | default_if_none:""}}" required> <br/>
+
+    <label for="id_bibliografia" name="bibliografia">Bibliografia: </label>
+    <input type="text" id="id_bibliografia" name="bibliografia" value= "{{autor.bibliografia | default_if_none:""}}" required > <br/>
+
+    <button type="submit">{{ texto_boton }} </button>
+>>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
 </form>
 {% endblock %}
