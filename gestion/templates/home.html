@@ -1,0 +1,46 @@
+{% extends "index.html" %}
+
+{% block contenido %}
+<div class="row g-4">
+    <!-- Libros -->
+    <div class="col-md-3">
+        <div class="card shadow-sm text-center p-3">
+            <i class="bi bi-journal-bookmark fs-1 text-primary"></i>
+            <h4 class="mt-3">Libros</h4>
+            <p>Administrar catálogo de libros.</p>
+            <a href="#" class="btn btn-primary">Entrar</a>
+        </div>
+    </div>
+
+    <!-- Autores -->
+    <div class="col-md-3">
+        <div class="card shadow-sm text-center p-3">
+            <i class="bi bi-person-lines-fill fs-1 text-success"></i>
+            <h4 class="mt-3">Autores</h4>
+            <p>Gestionar información de autores.</p>
+            <a href="{% url 'lista_autores' %}" class="btn btn-success">Entrar</a>
+        </div>  
+    </div>
+
+    <!-- Multas -->
+    <div class="col-md-3">
+        <div class="card shadow-sm text-center p-3">
+            <i class="bi bi-cash-stack fs-1 text-danger"></i>
+            <h4 class="mt-3">Multas</h4>
+            <p>Control de pagos y sanciones.</p>
+            <a href="#" class="btn btn-danger">Entrar</a>
+        </div>
+    </div>
+
+    <!-- Préstamos -->
+    <div class="col-md-3">
+        <div class="card shadow-sm text-center p-3">
+            <i class="bi bi-arrow-left-right fs-1 text-warning"></i>
+            <h4 class="mt-3">Préstamos</h4>
+            <p>Registrar y gestionar préstamos.</p>
+            <a href="{% url 'lista_prestamos' %}" class="btn btn-warning text-white">Entrar</a>
+        </div>
+    </div>
+
+</div>
+{% endblock  %}

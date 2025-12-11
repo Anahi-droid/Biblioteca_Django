@@ -1,0 +1,38 @@
+{% extends "index.html" %}
+
+{% block contenido %}
+<h2> AUTORES </h2>
+    <table style="border: 1px solid">
+        <tr style="border: 1px solid">
+            <td style="border: 1px solid">Nombre</td>
+            <td style="border: 1px solid">Apellido</td>
+            <td style="border: 1px solid">Bibliografía</td>
+            
+            <td style="border: 1px solid"></td> 
+        </tr>
+        {% for autor in autores %}
+        <tr style="border: 1px solid">
+            <td style="border: 1px solid">
+                {{ autor.nombre }}
+            </td>
+            <td style="border: 1px solid">
+                {{ autor.apellido }}
+            </td>
+            <td style="border: 1px solid">
+                {{ autor.bibliografia}}
+            </td>
+            
+            <td style="border: 1px solid">
+                {% if user.is_superuser %}
+                    <a href="{% url 'editar_autor' autor.id %}">Editar</a>
+                {% else %}
+                    Sin permiso
+                {% endif %}
+            </td>
+            
+            </tr>
+        {% endfor %}
+
+    </table>
+
+{% endblock %}
