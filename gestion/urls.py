@@ -2,7 +2,7 @@ from django.urls import path
 from .views import *
 from django.contrib.auth import views as auth_views
 
-<<<<<<< HEAD
+
 
 urlpatterns = [
     path("", index, name="index"),
@@ -34,7 +34,7 @@ urlpatterns = [
     path('multas/', lista_multas, name="lista_multa"),
     path('multas/nuevo/<int:prestamo_id>', crear_multa, name="crear_multa"),
 ]
-=======
+
 urlpatterns = [
     path("", index, name="index"),
     
@@ -67,4 +67,4 @@ urlpatterns = [
     
     #Path es la url de paths secundarios 
 ]
->>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
+
