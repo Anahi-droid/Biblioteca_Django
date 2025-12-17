@@ -1,5 +1,4 @@
 from django.db import models
-<<<<<<< HEAD
 from django.conf import settings
 from django.utils import timezone
 
@@ -63,7 +62,7 @@ class Multa(models.Model):
         if self.tipo == 'r' and self.monto == 0:
             self.monto = self.prestamo.multa_retraso
         super().save(*args, **kwargs)
-=======
+
 from django.conf import settings 
 from django.utils import timezone
 
@@ -135,4 +134,4 @@ class Multa(models.Model):
             super().save(*args **kwargs) # el super llama a la funcion padre, para no perder datos, o se que redefino
             
             
->>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
+
