@@ -1,6 +1,5 @@
 {% extends "index.html" %}
 
-<<<<<<< HEAD
 <!-- Seccion de autores -->
 {% block contenido %}
 <h2> Crear libros </h2>
@@ -22,27 +21,5 @@
     
 
     <button type="submit">Guardar</button>
-=======
-{%block contenido%}
-<h2> Crear Libros </h2>
-
-<form method="POST"> # from porque haremos un formulario
-    {% csrf_token %} # crea de token, se genera cada cierto tiempo
-    <label for="id_titulo" name="titulo">Titulo: </label>
-    <input type="text" id="id_titulo" name="titulo" required> <br/>
-      # placeholder es para que salga en el campo una ayuda de lo que se debe llenar
-
-    <label for="id_autor" name="autor">Autor: </label>
-    <select id="id_autor" name="autor" required> 
-        <option value="">-- Seleccione un autor --</option>
-        {% for autor in autores %} # recorre
-        <option value="{{autor.id}}">
-            {{autor.name}} - {{autor.apellido}}
-        </option>
-        {% endfor %}
-    </select>
-
-    <button type="submit">Guardar </button>
->>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
 </form>
 {% endblock %}
