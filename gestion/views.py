@@ -6,7 +6,6 @@ from django.conf import settings
 from django.http import HttpResponseForbidden
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-<<<<<<< HEAD
 from django.contrib.auth.models import Group
 
 
@@ -26,7 +25,6 @@ def crear_libro(request):
     if request.method == "POST":
         titulo =  request.POST.get('titulo')
         autor_id =  request.POST.get('autor')
-=======
 
 from .models import Autor, Libro, Prestamos, Multa
 
@@ -44,14 +42,14 @@ def crear_libro(request):
     if request.method == "POST":
         titulo = request.POST.get('titulo')
         autor_id = request.POST.get('autor')
->>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
+
         
         if titulo and autor_id:
             autor = get_object_or_404(Autor, id=autor_id)
             Libro.objects.create(titulo=titulo, autor=autor)
             return redirect('lista_libros')
     return render(request, 'gestion/templates/crear_libros.html', {'autores': autores})
-<<<<<<< HEAD
+
 
 def lista_autores(request):
     autores = Autor.objects.all()
@@ -61,7 +59,7 @@ def lista_autores(request):
 def crear_autor(request, id=None):
     if id == None:
         autor = None
-=======
+
      
     
 def lista_autores(request):
@@ -73,7 +71,6 @@ def lista_autores(request):
 def crear_autor(request, id=None):
     if id == None:
         autor = None 
->>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
         modo = 'crear'
     else:
         autor = get_object_or_404(Autor, id=id)
@@ -86,11 +83,10 @@ def crear_autor(request, id=None):
         if autor == None:
             Autor.objects.create(nombre=nombre, apellido=apellido, bibliografia=bibliografia)
         else:
-<<<<<<< HEAD
+
             autor.apellido = apellido
-=======
+
             autor.apellido = apellido # nuevo valor seran los datos que capturo desde el formulario
->>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
             autor.nombre = nombre
             autor.bibliografia = bibliografia
             autor.save()
@@ -98,7 +94,7 @@ def crear_autor(request, id=None):
     context = {'autor': autor,
                'titulo': 'Editar Autor' if modo == 'editar' else 'Crear Autor',
                'texto_boton': 'Guardar cambios' if modo == 'editar' else 'Crear'}
-<<<<<<< HEAD
+
     return render(request, 'gestion/templates/crear_autores.html', context)
 
 def lista_prestamos(request):
@@ -131,7 +127,7 @@ def crear_prestamo(request):
     return render(request, 'gestion/templates/crear_prestamo.html', {'libros': libro,
                                                                      'usuarios': usuario,
                                                                      'fecha': fecha})
-=======
+
     return render(request,'gestion/templates/crear_autores.html', context)
 
 def lista_prestamo(request):
@@ -161,14 +157,14 @@ def crear_prestamo(request):
     fecha = (timezone.now().date()).isoformat() # fromato iso es YYY-MM-DD
     return render(request,'gestion/templates/crear_prestamos.html', {'libros': libro, 'usuario': usuario,
                                                                      'fecha': fecha })
->>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
+
 
 def detalle_prestamo(request):
     pass
 
 def lista_multas(request):
     multas = Multa.objects.all()
-<<<<<<< HEAD
+
     return render(request, 'multas.html', {'multas': multas} )
 
 def crear_multa(request):
@@ -176,7 +172,7 @@ def crear_multa(request):
 
 
 def registro(request):
-=======
+
     return render(request, 'gestion/templates/prestamo.html', {'multas': multas})
 
 def crear_multas(request):
@@ -184,29 +180,27 @@ def crear_multas(request):
 
 def registro(request):
     
->>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
+
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             usuario = form.save()
-<<<<<<< HEAD
+
 
             grupo = Group.objects.get(name="UsuariosBiblioteca")
             usuario.groups.add(grupo)
 
-=======
->>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
+
             login(request, usuario)
             return redirect('index')
     else:
         form = UserCreationForm()
-<<<<<<< HEAD
+
     return render(request, 'gestion/templates/registration/registro.html', {'form': form})
 
 # Create your views here.
-=======
+
     return render(request, 'gestion/templates/registration/registro.html', {'form':form})
         
     
->>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
 
