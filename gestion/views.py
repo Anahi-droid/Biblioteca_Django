@@ -25,31 +25,12 @@ def crear_libro(request):
     if request.method == "POST":
         titulo =  request.POST.get('titulo')
         autor_id =  request.POST.get('autor')
-
-from .models import Autor, Libro, Prestamos, Multa
-
-def index(request):
-    title = settings.TITLE
-    return render(request, 'gestion/templates/home.html', {'titulo': title})
-
-def lista_libros(request):
-    libros = Libro.objects.all()
-    return render(request, 'gestion/templates/libros.html', {'libros': libros})
-
-def crear_libro(request):
-    autores = Autor.objects.all()
-    
-    if request.method == "POST":
-        titulo = request.POST.get('titulo')
-        autor_id = request.POST.get('autor')
-
         
         if titulo and autor_id:
             autor = get_object_or_404(Autor, id=autor_id)
             Libro.objects.create(titulo=titulo, autor=autor)
             return redirect('lista_libros')
     return render(request, 'gestion/templates/crear_libros.html', {'autores': autores})
-
 
 def lista_autores(request):
     autores = Autor.objects.all()
@@ -59,18 +40,6 @@ def lista_autores(request):
 def crear_autor(request, id=None):
     if id == None:
         autor = None
-
-     
-    
-def lista_autores(request):
-    autores = Autor.objects.all()
-    return render(request, 'gestion/templates/autores.html', {'autores': autores})
-
-
-@ login_required # ponemos antes esto de todas las funciones que querramos que antes de que ingrese aparezca un login
-def crear_autor(request, id=None):
-    if id == None:
-        autor = None 
         modo = 'crear'
     else:
         autor = get_object_or_404(Autor, id=id)
@@ -83,10 +52,7 @@ def crear_autor(request, id=None):
         if autor == None:
             Autor.objects.create(nombre=nombre, apellido=apellido, bibliografia=bibliografia)
         else:
-
             autor.apellido = apellido
-
-            autor.apellido = apellido # nuevo valor seran los datos que capturo desde el formulario
             autor.nombre = nombre
             autor.bibliografia = bibliografia
             autor.save()
@@ -94,7 +60,6 @@ def crear_autor(request, id=None):
     context = {'autor': autor,
                'titulo': 'Editar Autor' if modo == 'editar' else 'Crear Autor',
                'texto_boton': 'Guardar cambios' if modo == 'editar' else 'Crear'}
-
     return render(request, 'gestion/templates/crear_autores.html', context)
 
 def lista_prestamos(request):
@@ -128,43 +93,11 @@ def crear_prestamo(request):
                                                                      'usuarios': usuario,
                                                                      'fecha': fecha})
 
-    return render(request,'gestion/templates/crear_autores.html', context)
-
-def lista_prestamo(request):
-    prestamo = Prestamos.objects.all()
-    return render(request, 'gestion/templates/prestamo.html', {'prestamo': prestamo}) # se manda para que se visualice 
-
-@ login_required
-def crear_prestamo(request):
-    
-    if not request.user.has.perm('gestion.gestionar_prestamos'): # aqui gestionamos el permiso, si no tiene este permiso tata
-        return HttpResponseForbidden()
-    libro = Libro.objects.filter(disponible=True)
-    usuario = User.objects.all()
-        
-    if request.method == 'POST':
-        libro_id = request.method.POST.get('libro')
-        usuario_id = request.method.POST.get('usuario')
-        fecha_prestamo = request.method.POST.get('fecha_prestamo')
-        if libro_id and usuario_id and fecha_prestamo:
-            libro = get_object_or_404(Libro, id=libro_id)
-            usuario = get_object_or_404(User, id=usuario_id)
-            prestamo = Prestamos.objects.create(libro=libro, usuario=usuario,
-                                fecha_prestamo=fecha_prestamo)
-            libro.disponible = False 
-            libro.save()
-            return redirect('detalle_prestamo', id=prestamo.id)
-    fecha = (timezone.now().date()).isoformat() # fromato iso es YYY-MM-DD
-    return render(request,'gestion/templates/crear_prestamos.html', {'libros': libro, 'usuario': usuario,
-                                                                     'fecha': fecha })
-
-
 def detalle_prestamo(request):
     pass
 
 def lista_multas(request):
     multas = Multa.objects.all()
-
     return render(request, 'multas.html', {'multas': multas} )
 
 def crear_multa(request):
@@ -172,35 +105,58 @@ def crear_multa(request):
 
 
 def registro(request):
-
-    return render(request, 'gestion/templates/prestamo.html', {'multas': multas})
-
-def crear_multas(request):
-    pass
-
-def registro(request):
-    
-
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             usuario = form.save()
 
-
             grupo = Group.objects.get(name="UsuariosBiblioteca")
             usuario.groups.add(grupo)
-
 
             login(request, usuario)
             return redirect('index')
     else:
         form = UserCreationForm()
-
     return render(request, 'gestion/templates/registration/registro.html', {'form': form})
 
 # Create your views here.
 
-    return render(request, 'gestion/templates/registration/registro.html', {'form':form})
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.urls import reverse_lazy
+
+class LibroListView(LoginRequiredMixin, ListView):
+    model = Libro
+    template_name = 'gestion/templates/libros_view.html'
+    context_object_name = 'libros'
+    paginate_by = 10
+
+class LibroDetalleView(LoginRequiredMixin, DetailView):
+    model = Libro
+    template_name = 'gestion/templates/detalle_libros.html'
+    context_object_name = 'libros'
+
+class LibroCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    model = Libro
+    fields = ['titulo', 'autor', 'disponible']
+    template_name = 'gestion/templates/crear_libros.html'
+    success_url = reverse_lazy('libro_list') # click url
+    permission_required = 'gestion.add_libro' # permiso por defecto de django
+
+class LibroUpdateView(LoginRequiredMixin, UpdateView, PermissionRequiredMixin):
+    model = Libro
+    fields = ['titulo', 'autor']
+    template_name = 'gestion/templates/editar_libros.html'
+    success_url = reverse_lazy('libro_list') 
+    permission_required = 'gestion.change_libro' # actualizar, permiso de actualizar
+
+class LibroDeleteView(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
+    model = Libro
+    template_name = 'gestion/templates/delete_libros.html'
+    success_url = reverse_lazy('libro_list') 
+    permission_required = 'gestion.delete_libro'
+
+    
         
     
 
