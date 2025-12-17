@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 
-<<<<<<< HEAD
+
 <!-- Seccion de autores -->
 {% block contenido %}
 <h2> {{ titulo }}</h2>
@@ -17,7 +17,7 @@
     <input type="text" id="id_bibliografia" name="bibliografia" value="{{ autor.bibliografia | default_if_none:'' }}" required><br/>
 
     <button type="submit"> {{ texto_boton }}</button>
-=======
+
 {%block contenido%}
 <h2> {{ titulo }} </h2>
 
@@ -34,6 +34,6 @@
     <input type="text" id="id_bibliografia" name="bibliografia" value= "{{autor.bibliografia | default_if_none:""}}" required > <br/>
 
     <button type="submit">{{ texto_boton }} </button>
->>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
+
 </form>
 {% endblock %}
