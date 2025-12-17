@@ -1,0 +1,45 @@
+{% extends "index.html" %}
+
+<!-- Seccion de autores -->
+{% block contenido %}
+
+<table style="border: 1px solid">
+    <tr style="border: 1px solid">
+        <td  style="border: 1px solid">Titulo</td>
+        <td  style="border: 1px solid">Autor</td>
+        <td  style="border: 1px solid">Disponible</td>
+    </tr>
+    {% for libro in libros %}
+    <tr  style="border: 1px solid">
+        <td  style="border: 1px solid">
+            {{ libro.titulo }}
+        </td>
+        <td  style="border: 1px solid">
+            {{ libro.autor }}
+        </td>
+        <td  style="border: 1px solid">
+            {{ libro.disponible}}
+        </td>
+        </tr>
+    {% endfor %}
+
+</table>
+
+
+{% if is_paginated %}
+<div class="pagination">
+    {% if page_obj.has_previous %}
+    <a href="?page=1">Primera</a>
+    <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+    {% endif %}
+    <span> {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+    <a href="?page={{ page_obj.paginator_num_pages }}">última</a>
+    {% endif %}
+    <span> {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+
+</div>
+{% endif %}
+{% endblock %}
