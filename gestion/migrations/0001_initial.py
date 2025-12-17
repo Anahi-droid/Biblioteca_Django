@@ -29,7 +29,6 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('titulo', models.CharField(max_length=20)),
                 ('disponible', models.BooleanField(default=True)),
-<<<<<<< HEAD
                 ('autor', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='libros', to='gestion.autor')),
             ],
         ),
@@ -42,20 +41,6 @@ class Migration(migrations.Migration):
                 ('fecha_devolucion', models.DateField(blank=True, null=True)),
                 ('libro', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='prestamos', to='gestion.libro')),
                 ('usuario', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='prestamos', to=settings.AUTH_USER_MODEL)),
-=======
-                ('autor', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='Libros', to='gestion.autor')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Prestamos',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('fecha_prestamos', models.DateField(default=django.utils.timezone.now)),
-                ('fecha_maxima', models.DateField()),
-                ('fecha_devolucion', models.DateField(blank=True, null=True)),
-                ('libro', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='Prestamos', to='gestion.libro')),
-                ('usuario', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='Prestamos', to=settings.AUTH_USER_MODEL)),
->>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
             ],
         ),
         migrations.CreateModel(
@@ -66,11 +51,7 @@ class Migration(migrations.Migration):
                 ('monto', models.DecimalField(decimal_places=2, default=0, max_digits=3)),
                 ('pagada', models.BooleanField(default=False)),
                 ('fecha', models.DateField(default=django.utils.timezone.now)),
-<<<<<<< HEAD
                 ('prestamo', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='multas', to='gestion.prestamo')),
-=======
-                ('prestamo', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='Multa', to='gestion.prestamos')),
->>>>>>> 1ff34db8ae80ff69bb1af0619381edf623b73fc6
             ],
         ),
     ]
